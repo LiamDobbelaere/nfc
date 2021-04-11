@@ -69,6 +69,20 @@
         <span class="tagname">tagname missing</span>
     </div>
     <script>
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const color = getParameterByName('color');
+        if (color) {
+            document.getElementsByTagName('html')[0].style.backgroundColor = '#' + color;
+        }
+
         const urlParts = window.location.pathname.split('/');
         let tagName;
         let redirect;
@@ -80,6 +94,7 @@
             tagName = urlParts[urlParts.length - 1];
             redirect = '.';
         }
+
 
 
         document.getElementsByClassName('tagname')[0].textContent = tagName;
